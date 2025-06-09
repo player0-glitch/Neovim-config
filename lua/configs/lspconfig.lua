@@ -65,3 +65,16 @@ lspconfig.rust_analyzer.setup {
     },
   },
 }
+
+--config python language server
+
+lspconfig.pyright.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    python = {
+      pythonPath = "/usr/bin/python3"
+    },
+    pyright = {}
+  }
+}
