@@ -3,10 +3,7 @@ local base = require "nvchad.configs.lspconfig"
 local on_attach = base.on_attach
 local capabilities = base.capabilities
 -- local util require "lspconfig/util"
-local lspconfig = require "lspconfig"
-
---for Go
-local util = require "lspconfig/util"
+local lspconfig = require "lspconfig" --for Go local util = require "lspconfig/util"
 --loading defaults nvchad configurations
 base.defaults()
 --loading custom  for clangd configurations
@@ -18,8 +15,8 @@ lspconfig.clangd.setup {
   end,
   settings = {
     clangd = {
-      Includes = { "C:/msys64/mingw64/include" }, --gotta set up for linux
-      StorePrecompiledHeaders = true,
+      -- Includes = { "C:/msys64/mingw64/include" }, --gotta set up for linux
+      -- StorePrecompiledHeaders = true,
     },
   },
   capabilities = capabilities,
@@ -67,10 +64,25 @@ lspconfig.rust_analyzer.setup {
 }
 
 --config python language server
-
+require 'cmp'.setup {
+  sources = {
+    { name = "nvim_lsp" },
+    { name = 'buffer' }
+  }
+}
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    --Enabling omifunc for manual completion
+    vim.bo[args.buf].omifunc = 'v:lua.vim.lsp.omifunc'
+  end,
+})
 lspconfig.pyright.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    client.server_capabilities.signatureHelpProvier = false
+    on_attach(client, bufnr)
+  end,
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  -- capabilities = capabilities,
   settings = {
     python = {
       pythonPath = "/usr/bin/python3"

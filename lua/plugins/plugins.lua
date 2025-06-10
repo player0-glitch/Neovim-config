@@ -23,6 +23,12 @@ local plugins = {
       },
     },
   },
+  -- {
+  --   "hrsh7th/cmp-nvim-lsp",
+  --   opts={
+  --
+  --   }
+  -- },
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },

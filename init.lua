@@ -12,18 +12,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 --Saw this on https://github.com/NvChad/NvChad/discussions/2607#discussioncomment-8185006 to fix line wrap
-local opt = vim.opt
-opt.wrap = true
+vim.opt.wrap = true
+vim.opt.linebreak = true
 local lazy_config = require "configs.lazy"
 
 --- this brings a up a pop-up window for function signature help. Should not break any lsp default feature
---require("cmp").setup {
- -- sources = {
- --   {
-  --    name = "nvim_lsp_signature_help",
-  --  },
- -- },
---}
+require("cmp").setup {
+  sources = {
+    {
+      name = "nvim_lsp_signature_help",
+    },
+  },
+}
 
 --- End of my stuff
 require("lazy").setup({
